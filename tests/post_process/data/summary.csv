@@ -1,0 +1,9 @@
+index,uuid,total_runtime,energyplus_runtime,total_measure_runtime,other_runtime,number_of_measures,ambient_loop_prototype_building_runtime,change_building_location_runtime,ambient_loop_add_ets_system_runtime,ambient_loop_temperature_setpoint_runtime,hot_water_loop_design_temperature_runtime,internal_loads_multiplier_runtime,openstudio_results_runtime,ambient_loop_reports_runtime
+0,1e5b75a2-fcae-40fd-a55f-226ec76486f6,28.0,7.73,16.0,4.27,8,9.0,1.0,0.0,0.0,0.0,0.0,6.0,0.0
+1,38ff44fb-5cd9-4307-acff-96e112c086cb,28.0,8.47,15.0,4.530000000000001,8,9.0,0.0,0.0,0.0,0.0,0.0,5.0,1.0
+2,3dee6cf2-d5ca-499f-8c6b-aabfe55d08dd,29.0,7.83,16.0,5.170000000000002,8,9.0,0.0,1.0,0.0,0.0,0.0,5.0,1.0
+3,9f1e2940-c9f9-48e0-bf33-fee869fe0b3a,28.0,7.77,17.0,3.2300000000000004,8,9.0,1.0,0.0,0.0,0.0,0.0,6.0,1.0
+4,a380895a-b67a-4541-be86-8cb681be007f,27.0,8.5,15.0,3.5,8,8.0,1.0,0.0,0.0,0.0,0.0,5.0,1.0
+5,c8c42ff9-7bc9-4301-81f3-d5470a7ddf4e,28.0,8.04,16.0,3.960000000000001,8,8.0,1.0,0.0,0.0,0.0,1.0,5.0,1.0
+6,cd27bd09-64ee-4bfc-909f-c0b1fd8be53c,27.0,7.22,16.0,3.780000000000001,8,9.0,0.0,0.0,1.0,0.0,0.0,5.0,1.0
+7,d51a0b07-64f4-462a-9248-101ccb9dea2c,28.0,7.12,16.0,4.879999999999999,8,9.0,0.0,0.0,1.0,0.0,0.0,5.0,1.0

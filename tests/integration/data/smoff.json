@@ -1,0 +1,125 @@
+[
+  {
+    "results_file": "tests/post_process/data/simulation_results.csv",
+    "building_type": "Small Office Test",
+    "name": "smoff_test",
+    "display_name": "Small Office Test Dataset",
+    "description": "8 Simulations",
+    "validation_datapoint_id": "9f1e2940-c9f9-48e0-bf33-fee869fe0b3a",
+    "downsamples": [0.15, 1.0],
+    "algorithm_options": {
+      "RandomForest": {
+        "_comments": "If downsamples are specified here, then they will override the parent values",
+        "downsamples": [0.15, 1.0],
+        "param_grid": {
+          "_comments": "max_depth - default is None, max_features - default is p/3, min_samples_leaf - default is 1, min_samples_split - default is 2, n_estimators - default is 10",
+          "max_depth": [null, 6],
+          "max_features": [0.50, 0.66],
+          "min_samples_leaf": [1, 2],
+          "min_samples_split": [2, 3],
+          "n_estimators": [10, 100]
+        },
+        "base_fit_params": {
+          "_comments": "These can take on python eval commands, see n_jobs as example.",
+          "max_depth": null,
+          "n_estimators": 20,
+          "min_samples_split": 2
+        }
+      },
+      "SVR": {
+        "_comments": "If downsamples are specified here, then they will override the parent values",
+        "downsamples": [0.15],
+        "base_fit_params": {
+          "cache_size": 1000
+        },
+        "param_grid": {
+          "_comments": "gamma - default is 1/n_features, C - default is 1",
+          "C": [0.5, 5],
+          "gamma": [0.5, 0.05],
+          "epsilon": [0.1, 0.25]
+        }
+      }
+    },
+    "covariates": [
+      {
+        "name": "Month",
+        "display_name": "Month",
+        "units": "",
+        "type": "int",
+        "algorithm_options": {
+          "SVR": {
+            "variable_type": "cyclical",
+            "category_count": 12
+          }
+        }
+      },
+      {
+        "name": "Hour",
+        "display_name": "Hour",
+        "units": "",
+        "type": "int",
+        "algorithm_options": {
+          "SVR": {
+            "variable_type": "cyclical",
+            "category_count": 24
+          }
+        }
+      },
+      {
+        "name": "DayofWeek",
+        "display_name": "Day of Week",
+        "units": "",
+        "type": "int",
+        "algorithm_options": {
+          "SVR": {
+            "variable_type": "cyclical",
+            "category_count": 7
+          }
+        }
+      },
+      {
+        "name": "SiteOutdoorAirDrybulbTemperature",
+        "display_name": "Dry Bulb Temperature",
+        "units": "C",
+        "type": "float"
+      },
+      {
+        "name": "SiteOutdoorAirRelativeHumidity",
+        "display_name": "Relative Humidity",
+        "units": "%",
+        "type": "float"
+      },
+      {
+        "name": "ETSInletTemperature",
+        "display_name": "Ambient Loop Inlet Temperature",
+        "units": "C",
+        "type": "float"
+      },
+      {
+        "name": "internal_loads_multiplier.lpd_average",
+        "display_name": "LPD Average",
+        "units": "W/m2",
+        "type": "float"
+      }
+    ],
+    "responses": [
+      {
+        "name": "HeatingElectricity",
+        "display_name": "Heating Electric Energy",
+        "units": "J"
+      },
+      {
+        "name": "DistrictHeatingHotWaterEnergy",
+        "display_name": "Ambient Loop Heating Energy",
+        "units": "J"
+      },
+      {
+        "name": "ETSHeatingOutletTemperature",
+        "display_name": "Building Heating Outlet Temperature",
+        "units": "C"
+      }
+    ]
+  }
+]
+
+

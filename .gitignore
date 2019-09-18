@@ -1,0 +1,30 @@
+.idea
+*.pyc
+*.pkl
+.DS_Store
+.tox
+.python-version
+.ipynb_checkpoints
+.coverage*
+
+# never commit these data files because they will be too large
+tests/post_process/data/*/*.zip
+tests/post_process/data/*/simulation_results.csv
+tests/post_process/data/*/*/data_point/
+tests/post_process/data/**/data_point.zip
+
+# ignore the ruby specific files
+post_process/.bundle
+post_process/gems
+post_process/Gemfile.lock
+post_process/.ruby-version
+
+# Don't commit any of the output that gets generated from the framework
+/output
+
+# package information
+ROM_Framework.egg-info/
+/build
+/dist
+docs/build
+

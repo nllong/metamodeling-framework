@@ -1,0 +1,6 @@
+.git
+build
+ci
+output
+dist
+*.egg-info
