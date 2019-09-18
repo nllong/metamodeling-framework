@@ -6,6 +6,6 @@ Building Documentation
 
 .. code-block:: bash
 
-   $ sphinx-apidoc -o docs/source/modules . rom
+   $ sphinx-apidoc -o docs/source/modules . metamodeling
    $ cd docs
    $ make html

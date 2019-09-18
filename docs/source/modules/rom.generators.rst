@@ -1,10 +1,10 @@
-ROM Generators
-==============
+Metamodeling Generators
+=======================
 
 Model Generator Base
 --------------------
 
-.. automodule:: rom.generators.model_generator_base
+.. automodule:: metamodeling.generators.model_generator_base
     :members:
     :undoc-members:
     :show-inheritance:
@@ -12,7 +12,7 @@ Model Generator Base
 Linear Model
 ------------
 
-.. automodule:: rom.generators.linear_model
+.. automodule:: metamodeling.generators.linear_model
     :members:
     :undoc-members:
     :show-inheritance:
@@ -21,7 +21,7 @@ Linear Model
 Random Forest Model
 -------------------
 
-.. automodule:: rom.generators.random_forest
+.. automodule:: metamodeling.generators.random_forest
     :members:
     :undoc-members:
     :show-inheritance:
@@ -29,7 +29,7 @@ Random Forest Model
 Support Vector Regression
 -------------------------
 
-.. automodule:: rom.generators.svr
+.. automodule:: metamodeling.generators.svr
     :members:
     :undoc-members:
     :show-inheritance:

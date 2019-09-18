@@ -1,10 +1,10 @@
-Reduced Order Models
-====================
+Metamodels
+==========
 
 Metamodels
 ----------
 
-.. automodule:: rom.metamodels
+.. automodule:: metamodeling.metamodels
     :members:
     :undoc-members:
     :show-inheritance:
@@ -12,7 +12,7 @@ Metamodels
 Evaluate Helpers
 ----------------
 
-.. automodule:: rom.evaluate_helpers
+.. automodule:: metamodeling.evaluate_helpers
     :members:
     :undoc-members:
     :show-inheritance:
@@ -20,7 +20,7 @@ Evaluate Helpers
 Shared Methods
 --------------
 
-.. automodule:: rom.shared
+.. automodule:: metamodeling.shared
     :members:
     :undoc-members:
     :show-inheritance:
@@ -28,8 +28,7 @@ Shared Methods
 Validation Helpers
 ------------------
 
-.. automodule:: rom.validation_helpers
+.. automodule:: metamodeling.validation_helpers
     :members:
     :undoc-members:
     :show-inheritance:
-

@@ -1,3 +1,8 @@
+Version 0.1.2 (Current Develop)
+===============================
+
+* Rename project to metamodeling framework
+
 Version 0.1.1
 =============
 
@@ -11,7 +16,6 @@ Version 0.1.1
 * Add results_file to the metamodel.json config file to point to the CSV that needs to be loaded
 * Moved unit tests to root directory
 * Moved post-processing script (which is in Ruby) from the data directory to the post_process directory
-
 
 Version 0.1.0
 =============

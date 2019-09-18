@@ -5,7 +5,7 @@
 
 from unittest import TestCase
 
-from rom.shared import is_int
+from metamodeling.shared import is_int
 
 
 class TestShared(TestCase):

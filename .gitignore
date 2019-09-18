@@ -4,6 +4,7 @@
 .DS_Store
 .tox
 .python-version
+.ruby-version
 .ipynb_checkpoints
 .coverage*
 
