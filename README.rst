@@ -75,6 +75,6 @@ To Dos
 .. |build| image:: https://travis-ci.org/nllong/metamodeling-framework.svg?branch=develop
     :target: https://travis-ci.org/nllong/metamodeling-framework
 
-.. |docs| image:: https://readthedocs.org/projects/reduced-order-modeling-framework/badge/?version=latest
+.. |docs| image:: https://readthedocs.org/projects/metamodelings-framework/badge/?version=latest
     :target: https://metamodeling-framework.readthedocs.io/en/latest/
     :alt: Documentation Status
