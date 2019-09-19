@@ -9,10 +9,8 @@ RUN ln -sf /usr/share/zoneinfo/EST /etc/localtime && \
 
 
 # Copy requirements and install before copying the code
-WORKDIR /var/rom
-COPY requirements.txt /var/rom/requirements.txt
+WORKDIR /var/metamodeling
+COPY requirements.txt /var/metamodeling/requirements.txt
 RUN pip install -r requirements.txt
 
-COPY . /var/rom
-
-
+COPY . /var/metamodeling

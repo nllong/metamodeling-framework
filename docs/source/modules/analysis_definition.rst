@@ -26,6 +26,6 @@ To run an analysis with a JSON file, first load a metamodel, then load the analy
 
 .. code-block:: python
 
-    from rom.analysis_definition.analysis_definition import AnalysisDefinition
-    from rom.metamodels import Metamodels
+    from metamodeling.analysis_definition.analysis_definition import AnalysisDefinition
+    from metamodeling.metamodels import Metamodels
 

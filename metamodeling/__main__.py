@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from .rom import main
+from .metamodeling import main
 
 main()

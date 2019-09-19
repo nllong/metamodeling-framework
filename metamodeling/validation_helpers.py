@@ -172,7 +172,7 @@ def validate_dataframe(df, metadata, image_save_dir):
         if cooling_col_name in df.columns.values:
             df[total_col_name] += df[cooling_col_name]
 
-    # Run the ROM for each of the response variables
+    # Run the metamodel for each of the response variables
     errors = []
     for model_type, model_data in metadata.items():
         for response in model_data['responses']:

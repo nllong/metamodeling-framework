@@ -4,7 +4,7 @@
 Main entry point for building, evaluating, and validating reduced order models. Presently, this
 file uses argparse to process the command line options and, in the same file, processes the
 arguments. Ideally, the processing portion of this file is removed from the parsing. There is a
-helper rom-runner.py file as a helper file at the root of the repository that passed
+helper meta-runner.py file as a helper file at the root of the repository that passed
 the arguments to this file.
 
 .. moduleauthor:: Nicholas Long (nicholas.l.long@colorado.edu, nicholas.lee.long@gmail.com)
@@ -41,7 +41,7 @@ NAMEMAP = {
     'SVR': 'SVR',
 }
 f = Figlet()
-print(f.renderText('ROM Framework'))
+print(f.renderText('Metamodeling'))
 
 parser = argparse.ArgumentParser()
 parser.add_argument('action', default=None, choices=['inspect', 'build', 'evaluate', 'validate', 'run'])
@@ -199,7 +199,7 @@ if metamodel.set_analysis(args.analysis_moniker):
                     for item, values in ind_metrics.items():
                         metrics[item] = metrics[item] + ind_metrics[item]
 
-                    # Run the ROM for each of the response variables
+                    # Run the netamodel for each of the response variables
                     for response in metamodel.available_response_names(model_type[0]):
                         metadata[model_type[0]]['responses'].append(response)
 
@@ -224,10 +224,10 @@ if metamodel.set_analysis(args.analysis_moniker):
     elif args.action == 'run':
         print("Running")
         if not args.downsample:
-            print("Must supply at least one downsample when running ROM models")
+            print("Must supply at least one downsample when running metamodels")
             exit(1)
         elif not args.analysis_definition:
-            print("Must supply analysis definition when running ROM models")
+            print("Must supply analysis definition when running metamodels")
             exit(1)
 
         analysis = AnalysisDefinition(args.analysis_definition)
@@ -246,7 +246,7 @@ if metamodel.set_analysis(args.analysis_moniker):
             # Load the reducted order models
             metamodel.load_models(model[0], downsample=args.downsample)
 
-            # Run the ROM for each of the response variables
+            # Run the metamodel for each of the response variables
             for response in metamodel.available_response_names(model[0]):
                 metadata[model[0]]['responses'].append(response)
 

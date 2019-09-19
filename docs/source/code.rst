@@ -3,5 +3,5 @@ Code Documentation
 
 .. toctree::
 
-    modules/rom
-    modules/rom.generators
+    modules/metamodeling
+    modules/metamodeling.generators

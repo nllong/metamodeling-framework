@@ -12,18 +12,17 @@ with open('LICENSE') as f:
 
 version = re.search(
     '^__version__\s*=\s*\'(.*)\'',
-    open('rom/version.py').read(),
+    open('metamodeling/version.py').read(),
     re.M).group(1)
 
 setup(
-    # TODO: rename to Metamodeling Framework
-    name='ROM Framework',
+    name='Metamodeling Framework',
     version=version,
     description='Generate metamodels based on arbitrary CSV files',
     long_description=readme,
     author='Nicholas Long',
     author_email='nicholas.lee.long@gmail.com',
-    url='https://github.com/nllong/ROM-Framework',
+    url='https://github.com/nllong/metamodeling-framework',
     license=license,
     python_requires='>=3',
     # If updating here, then make sure to update requirements.txt file as well.

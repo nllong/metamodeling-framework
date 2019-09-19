@@ -87,7 +87,7 @@ class Metamodels(object):
         """
         Parse the file that defines the ROMs that have been created.
 
-        :param filename: str, The JSON ROM file path.
+        :param filename: str, The JSON metamodel file path.
         """
         if not os.path.exists(filename):
             raise Exception("File does not exist: %s" % filename)
@@ -534,9 +534,9 @@ class Metamodels(object):
     @property
     def analysis(self):
         """
-        Return the ROM analysis file.
+        Return the metamodel analysis file.
 
-        :return: Parsed JSON ROM file.
+        :return: Parsed JSON metamodel file.
         """
         if self.set_i is None:
             raise Exception(

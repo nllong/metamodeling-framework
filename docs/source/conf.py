@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# ROM Framework documentation build configuration file, created by
+# Metamodeling Framework documentation build configuration file, created by
 # sphinx-quickstart on Fri Sep 28 19:00:35 2018.
 #
 # This file is execfile()d with the current directory set to its
@@ -50,8 +50,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'ROM Framework'
-copyright = '2018, Nicholas Long'
+project = 'Metamodeling Framework'
+copyright = '2018-2019, Nicholas Long'
 author = 'Nicholas Long'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -140,7 +140,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'ROMFramework.tex', 'ROM Framework Documentation',
+    (master_doc, 'MetamodelingFramework.tex', 'Metamodeling Framework Documentation',
      'Nicholas Long', 'manual'),
 ]
 
@@ -149,7 +149,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'romframework', 'ROM Framework Documentation',
+    (master_doc, 'metamodelingframework', 'Metamodeling Framework Documentation',
      [author], 1)
 ]
 
@@ -159,8 +159,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'ROMFramework', 'ROM Framework Documentation',
-     author, 'ROMFramework', 'One line description of project.',
+    (master_doc, 'MetamodelingFramework', 'Metamodeling Framework Documentation',
+     author, 'MetamodelingFramework', 'One line description of project.',
      'Miscellaneous'),
 ]
 

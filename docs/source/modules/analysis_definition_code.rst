@@ -4,7 +4,7 @@ Code
 Analysis Definition
 -------------------
 
-.. automodule:: rom.analysis_definition.analysis_definition
+.. automodule:: metamodeling.analysis_definition.analysis_definition
     :members:
     :undoc-members:
     :show-inheritance:
@@ -12,7 +12,7 @@ Analysis Definition
 EPW File
 --------
 
-.. automodule:: rom.analysis_definition.epw_file
+.. automodule:: metamodeling.analysis_definition.epw_file
     :members:
     :undoc-members:
     :show-inheritance:
