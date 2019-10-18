@@ -2,6 +2,7 @@ Version 0.1.2 (Current Develop)
 ===============================
 
 * Rename project to metamodeling framework
+* Allow results_file to magically try and find the results in the post_process/{metamodel['name']}/simulation_results.csv}
 
 Version 0.1.1
 =============

@@ -131,7 +131,10 @@ class Metamodels(object):
 
         :return: str, path.
         """
-        return self.file[self.set_i]['results_file']
+        if 'results_file' in self.file[self.set_i].keys():
+            return self.file[self.set_i]['results_file']
+        else:
+            return f"post_process/{self.analysis_name}/simulation_results.csv"
 
     @property
     def analysis_name(self):
