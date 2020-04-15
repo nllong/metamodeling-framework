@@ -8,6 +8,8 @@ Version 0.1.2 (Current Develop)
 * Remove the ANOVA plots in LinearModel due to missing statsmodel package.
 * Remove the "results_directory" key in the metamodel definition file. This was no longer used.
 * Add random to the validation_id option in the metamodel definition
+* Remove some hard coded validation checks such as calculating the total HVAC energy
+
 Version 0.1.1
 =============
 

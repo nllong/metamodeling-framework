@@ -161,6 +161,10 @@ if metamodel.set_analysis(args.analysis_moniker):
                 continue
 
             validation_dir = "output/%s_%s/ValidationData" % (args.analysis_moniker, downsample)
+            if not os.path.exists(validation_dir):
+                print(f"Skipping validation since there are no files for {validation_dir}")
+                continue
+
             output_dir = "%s/images" % validation_dir
 
             if os.path.exists(output_dir):
