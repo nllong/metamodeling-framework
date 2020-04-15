@@ -43,6 +43,7 @@ A small office example has been included with the source code under the tests di
     .. code-block:: bash
         :linenos:
 
+        ./meta-runner inspect -f metamodeling/tests/smoff_test/metamodels.json -a smoff_test
         ./meta-runner build -f metamodeling/tests/smoff_test/metamodels.json -a smoff_test
         ./meta-runner evaluate -f metamodeling/tests/smoff_test/metamodels.json -a smoff_test
         ./meta-runner validate -f metamodeling/tests/smoff_test/metamodels.json -a smoff_test

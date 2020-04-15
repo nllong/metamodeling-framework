@@ -199,7 +199,7 @@ class RandomForest(ModelGeneratorBase):
 
                 # Rebuild only the best rf, and save the results
                 model = RandomForestRegressor(**grid_search.best_params_)
-                best_model = model.fit(train_x, train_y[response])
+                best_model = model.fit(train_x, train_y[response], mean_train_score=True)
 
                 pickle_file(best_model, '%s/%s' % (self.models_dir, response))
 

@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 # -*- coding: utf-8 -*-
 """
 Main entry point for building, evaluating, and validating reduced order models. Presently, this
@@ -17,24 +18,23 @@ import time
 import pandas as pd
 from pyfiglet import Figlet
 
-from .analysis_definition.analysis_definition import AnalysisDefinition
-from .evaluate_helpers import (
+from metamodeling.analysis_definition.analysis_definition import AnalysisDefinition
+from metamodeling.evaluate_helpers import (
     evaluate_process_model_results,
     evaluate_process_all_model_results,
     evaluate_process_cv_results,
 )
-from .metamodels import Metamodels
-from .shared import unpickle_file
-from .validation_helpers import validate_dataframe, validation_save_metrics
+from metamodeling.metamodels import Metamodels
+from metamodeling.shared import unpickle_file
+from metamodeling.validation_helpers import validate_dataframe, validation_save_metrics
 # from pprint import pprint as pp
 
 # Make sure to keep these models here, optimizing imports will remove these
-from .generators.linear_model import LinearModel  # noqa
-from .generators.random_forest import RandomForest # noqa
-from .generators.svr import SVR # noqa
+from metamodeling.generators.linear_model import LinearModel  # noqa
+from metamodeling.generators.random_forest import RandomForest # noqa
+from metamodeling.generators.svr import SVR # noqa
 # End include
 
-# TODO: move this to a generic location and use in other locations (e.g. save_2d/3d).
 NAMEMAP = {
     'LinearModel': 'LM',
     'RandomForest': 'RF',

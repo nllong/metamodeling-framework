@@ -4,6 +4,7 @@
 """
 import fnmatch
 import os
+import random
 import shutil
 import time
 from collections import OrderedDict
@@ -12,7 +13,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
-import statsmodels.api as sm
 from scipy import stats
 from scipy.stats import spearmanr, pearsonr
 from sklearn.model_selection import train_test_split
@@ -90,6 +90,12 @@ class ModelGeneratorBase(object):
         out_df = self.dataset.describe()
         out_df.to_csv(f'{self.data_dir}/statistics.csv')
 
+        # list out all the columns
+        out_df = self.dataset.columns
+        with open(f'{self.data_dir}/column_names.csv', 'w') as f:
+            for column in self.dataset.columns:
+                f.write(column + '\n')
+
     def load_data(self, datafile):
         """
         Load the data into a dataframe. The data needs to be a CSV file at the moment.
@@ -102,7 +108,7 @@ class ModelGeneratorBase(object):
         else:
             raise Exception(f"Datafile does not exist: {datafile}")
 
-        print(f'Loading data file: {datafile}')
+        print(f'Loading results data file: {datafile}')
         # message the data as needed based on the kwargs arg
         # TODO: remove these hard coded options and pass in as kwargs.
         drop_columns = ['DistrictCoolingOutletTemperature']
@@ -199,6 +205,9 @@ class ModelGeneratorBase(object):
             #     closest_medians = closest_medians[closest_medians[cv['name']] == median]
             #     print(f'len of dataframe is {len(closest_medians)}')
 
+        elif metamodel.validation_id == 'random':
+            ids = dataset['id'].unique()
+            validate_id = random.choice(ids)
         else:
             # assume that there is a validation id that has been passed
             validate_id = metamodel.validation_id
@@ -337,11 +346,11 @@ class ModelGeneratorBase(object):
         ax1.set_ylabel('Residuals')
         ax1.set_title('Residuals vs Fitted')
 
-        ax2 = fig.add_subplot(1, 2, 2)
-        sm.qqplot(residuals, line='s', ax=ax2)
-        ax2.set_title('Normal Q-Q')
+        # ax2 = fig.add_subplot(1, 2, 2)
+        # sm.qqplot(residuals, line='s', ax=ax2)
+        # ax2.set_title('Normal Q-Q')
 
-        plt.tight_layout()
-        fig.savefig('%s/fig_anova_%s.png' % (self.images_dir, model_name))
-        fig.clf()
-        plt.clf()
+        # plt.tight_layout()
+        # fig.savefig('%s/fig_anova_%s.png' % (self.images_dir, model_name))
+        # fig.clf()
+        # plt.clf()

@@ -132,7 +132,12 @@ class Metamodels(object):
         :return: str, path.
         """
         if 'results_file' in self.file[self.set_i].keys():
-            return self.file[self.set_i]['results_file']
+            # fully qualify the path
+            p = self.file[self.set_i]['results_file']
+            if os.path.isabs(p):
+                return p
+            else:
+                return os.path.abspath(os.path.join(os.path.dirname(self.filename), p))
         else:
             return f"post_process/{self.analysis_name}/simulation_results.csv"
 
@@ -578,9 +583,7 @@ class Metamodels(object):
         """
 
         if self.set_i is None:
-            raise Exception(
-                "Attempting to access analysis without setting. Run analysis.set_analysis(<id>)"
-            )
+            raise Exception("Attempting to access analysis without setting. Run analysis.set_analysis(<id>)")
 
         # Group the datetypes by column
         data_types = {
