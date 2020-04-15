@@ -1,6 +1,6 @@
 [
   {
-    "results_file": "tests/post_process/data/simulation_results.csv",
+    "results_file": "../../post_process/data/simulation_results.csv",
     "building_type": "Small Office Test",
     "name": "smoff_test",
     "display_name": "Small Office Test Dataset",
