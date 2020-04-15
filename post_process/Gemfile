@@ -1,3 +1,0 @@
-source 'https://rubygems.org'
-
-gem 'openstudio-analysis', github: 'nrel/openstudio-analysis-gem'
