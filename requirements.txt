@@ -1,13 +1,13 @@
 # if updating then make sure to update the install_requires in setup.py
 
 # core libraries (required by package)
-matplotlib==2.2.3
-pandas==0.23.2
-numpy==1.14.5
+matplotlib==3.2.1
+pandas==1.0.3
+numpy==1.18.3
 requests==2.23.0
-scikit-learn==0.19.2
-scipy==1.1.0
-seaborn==0.9.0
+scikit-learn==0.22.2
+scipy==1.4.1
+seaborn==0.10.0
 pyfiglet==0.7.5
 
 # AWS access
@@ -15,12 +15,12 @@ awscli==1.15.80
 
 # testing
 nose==1.3.7
-pytest==5.0.1
-python-coveralls==2.9.2
-pytest-cov==2.7.1
-autopep8==1.4.4
-flake8==3.7.8
-tox==3.13.2
+pytest==5.4.1
+python-coveralls==2.9.3
+pytest-cov==2.8.1
+autopep8==1.5.2
+flake8==3.7.9
+tox==3.14.6
 pytest-ordering==0.6
 
 # documentation

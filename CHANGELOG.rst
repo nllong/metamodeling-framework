@@ -10,6 +10,9 @@ Version 0.1.2 (Current Develop)
 * Add random to the validation_id option in the metamodel definition
 * Remove some hard coded validation checks such as calculating the total HVAC energy
 * Do not remove inspection results from the data folder when running build.
+* Rename ETSModel to Metamodel. Metamodels point to a Metamodel (not ETSModel)
+* Update SciKit Learn to 0.22.2, Update NumPy to 1.18.3, and other dependencies.
+* Use pipelines for Random Forest and enable categorical variables
 
 Version 0.1.1
 =============
