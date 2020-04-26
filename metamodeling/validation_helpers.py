@@ -41,21 +41,14 @@ def validation_plot_timeseries(melted_df, filename):
     plt.rcParams['figure.figsize'] = [10, 4]
 
     with plt.rc_context(dict(sns.axes_style("whitegrid"))):
-        fig, ax = plt.subplots()
-        # sns.lineplot(x='DateTime', y='Value', hue='Variable', data=melted_df, ax=ax)
-        sns.tsplot(melted_df, time='DateTime', unit='Dummy', condition='Variable', value='Value',
-                   ax=ax)
-        # convert all xtick labels to selected format from ms timestamp
-        # ax.set_xticklabels(
-        #     [pd.to_datetime(tm).strftime('%Y-%m-%d\n %H:%M:%S') for tm in ax.get_xticks()],
-        #     rotation=50)
+        ax = sns.lineplot(data=melted_df, x='DateTime', y='Value', hue='Variable')
 
-        ax.xaxis.set_major_formatter(mpl.ticker.FuncFormatter(date_formatter))
         if 'Temperature' in filename:
             ax.set(xlabel='', ylabel='Temperature (deg C)')
         else:
             ax.set(xlabel='', ylabel='Power (W)')
 
+        fig = ax.get_figure()
         # Put the labels at an angle since they tend to be too long
         fig.autofmt_xdate()
         fig.savefig(filename)
@@ -247,9 +240,14 @@ def validate_dataframe(df, metadata, image_save_dir):
             for response in model_data['responses']:
                 modeled_name = "Modeled %s %s" % (model_data['moniker'], response)
                 if 'Temperature' not in response:
-                    # convert to watts
-                    season_df[response] = season_df[response] / 277777.77
-                    season_df[modeled_name] = season_df[modeled_name] / 277777.77
+                    # I've tried multiple ways to suppress the
+                    #   A value is trying to be set on a copy of a slice from a DataFrame.
+                    #   Try using .loc[row_indexer,col_indexer] = value instead
+                    # Using iloc, loc, assign, apply(lambda...), etc. Not sure how to prevent the warning.
+                    icol = season_df.columns.get_loc(response)
+                    season_df.iloc[:, icol] *= 1/277777.77
+                    icol = season_df.columns.get_loc(modeled_name)
+                    season_df.iloc[:, icol] *= 1/277777.77
 
                 selected_columns = ['DateTime', response, modeled_name]
                 melted_df = pd.melt(season_df[selected_columns],
