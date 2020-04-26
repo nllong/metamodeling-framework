@@ -9,6 +9,7 @@ Version 0.1.2 (Current Develop)
 * Remove the "results_directory" key in the metamodel definition file. This was no longer used.
 * Add random to the validation_id option in the metamodel definition
 * Remove some hard coded validation checks such as calculating the total HVAC energy
+* Do not remove inspection results from the data folder when running build.
 
 Version 0.1.1
 =============

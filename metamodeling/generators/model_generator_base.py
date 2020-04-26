@@ -60,7 +60,7 @@ class ModelGeneratorBase(object):
         self.data_dir = '%s/data' % self.base_dir
 
         # Remove some directories if they exist
-        for dir_n in ['images_dir', 'models_dir', 'data_dir']:
+        for dir_n in ['images_dir', 'models_dir']:
             if os.path.exists(getattr(self, dir_n)):
                 # print("removing the directory %s" % dir)
                 shutil.rmtree(getattr(self, dir_n))
