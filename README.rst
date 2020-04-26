@@ -29,6 +29,7 @@ Installation from Source
         :linenos:
 
         pip install -r requirements.txt
+        pip install .
 
 4) (Optional) install graphviz to visualize decision trees
 
@@ -43,9 +44,10 @@ A small office example has been included with the source code under the tests di
     .. code-block:: bash
         :linenos:
 
-        ./meta-runner build -f metamodeling/tests/smoff_test/metamodels.json -a smoff_test
-        ./meta-runner evaluate -f metamodeling/tests/smoff_test/metamodels.json -a smoff_test
-        ./meta-runner validate -f metamodeling/tests/smoff_test/metamodels.json -a smoff_test
+        metamodel.py inspect -f tests/integration/data/smoff.json -a smoff_test
+        metamodel.py build -f tests/integration/data/smoff.json -a smoff_test
+        metamodel.py evaluate -f tests/integration/data/smoff.json -a smoff_test
+        metamodel.py validate -f tests/integration/data/smoff.json -a smoff_test
 
 Installation from PyPI
 ======================

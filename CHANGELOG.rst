@@ -3,6 +3,13 @@ Version 0.1.2 (Current Develop)
 
 * Rename project to metamodeling framework
 * Allow results_file to magically try and find the results in the post_process/{metamodel['name']}/simulation_results.csv}
+* Move downloading of simulations to Python. In custom script call from metamodeling.post_process import OpenStudioServerAPI
+* Remove Ruby and add post processing python code. User will need to write their own post processing scripts.
+* Remove the ANOVA plots in LinearModel due to missing statsmodel package.
+* Remove the "results_directory" key in the metamodel definition file. This was no longer used.
+* Add random to the validation_id option in the metamodel definition
+* Remove some hard coded validation checks such as calculating the total HVAC energy
+* Do not remove inspection results from the data folder when running build.
 
 Version 0.1.1
 =============

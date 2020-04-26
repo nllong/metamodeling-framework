@@ -4,6 +4,8 @@ import re
 
 from setuptools import setup, find_packages
 
+# from metamodeling import run
+
 with open('README.rst') as f:
     readme = f.read()
 
@@ -31,6 +33,8 @@ setup(
         'matplotlib==2.2.3',
         'pandas==0.23.2',
         'seaborn==0.9.0',
+        'requests==2.23.0',
+        'pyfiglet==0.8.post1',
     ],
     classifiers=[
         'Development Status :: 4 - Beta',
@@ -43,4 +47,5 @@ setup(
         'Programming Language :: Python :: 3.7',
     ],
     packages=find_packages(exclude=('tests', 'docs')),
+    scripts=['bin/metamodel.py'],
 )

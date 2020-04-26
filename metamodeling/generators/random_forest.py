@@ -55,7 +55,7 @@ class RandomForest(ModelGeneratorBase):
         importance_data = pd.Series(model.feature_importances_, index=np.asarray(covariates))
         importance_data = importance_data.nlargest(20)
 
-        fig = plt.figure(figsize=(8, 3), dpi=100)
+        fig = plt.figure(figsize=(8, 4), dpi=100)
         # defaults to the ax in the figure.
         ax = sns.barplot(x=list(importance_data), y=list(importance_data.index.values),
                          color="grey", ci=None)
@@ -181,6 +181,9 @@ class RandomForest(ModelGeneratorBase):
                     total_candidates = len(options) * total_candidates
 
                 print('CV will result in %s candidates' % total_candidates)
+
+                # Need to update to handle strings:
+                # https://scikit-learn.org/stable/auto_examples/inspection/plot_permutation_importance.html#sphx-glr-auto-examples-inspection-plot-permutation-importance-py  # noqa
 
                 # Allow for the computer to be responsive during grid_search
                 n_jobs = multiprocessing.cpu_count() - 1

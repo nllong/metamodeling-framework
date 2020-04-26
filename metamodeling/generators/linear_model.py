@@ -25,7 +25,7 @@ class LinearModel(ModelGeneratorBase):
             model, model_name, model_type, x_data, y_data, downsample,
             build_time, cv_time, covariates, scaler
         )
-        self.anova_plots(y_data, yhat, model_name)
+        # self.anova_plots(y_data, yhat, model_name)
         return performance
 
     def build(self, metamodel, **kwargs):

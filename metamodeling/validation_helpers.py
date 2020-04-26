@@ -27,7 +27,7 @@ def validation_plot_energy_temp(melted_df, filename):
             data=melted_df,
             ax=ax).get_figure()
         ax.set_xlabel('Site Outdoor Air Drybulb Temperature (deg C)')
-        ax.set_ylabel('Total HVAC Power (W)')
+        ax.set_ylabel('HVAC Power (W)')
         newplt.savefig(filename)
         newplt.clf()
         plt.clf()
@@ -124,53 +124,10 @@ def validate_dataframe(df, metadata, image_save_dir):
     """
     Take the dataframe and perform various validations and create plots
 
-    :param df: Contains the actual and modeled data for various ROMs
+    :param df: Contains the actual and modeled data for various metamodels
     :return:
     """
     # Create some new columns for total energy
-
-    # TODO: remove hard coded response variables
-    df['Total Heating Energy'] = df['HeatingElectricity'] + df['DistrictHeatingHotWaterEnergy']
-    df['Total Cooling Energy'] = df['CoolingElectricity'] + df['DistrictCoolingChilledWaterEnergy']
-    df['Total HVAC Energy'] = df['Total Heating Energy'] + df['Total Cooling Energy']
-
-    # Aggregate the data and break out the cooling and heating totals
-    for model_type, model_data in metadata.items():
-        for response in model_data['responses']:
-            modeled_name = "Modeled %s %s" % (model_data['moniker'], response)
-            heating_col_name = 'Total Heating Energy %s' % model_data['moniker']
-            cooling_col_name = 'Total Cooling Energy %s' % model_data['moniker']
-            total_col_name = 'Total HVAC Energy %s' % model_data['moniker']
-
-            # calculate the total hvac energy for each model type
-            if 'Heating' in modeled_name:
-                if heating_col_name not in df.columns.values:
-                    # initialize the columns
-                    df[heating_col_name] = 0
-                df[heating_col_name] += df[modeled_name]
-
-            if 'Cooling' in modeled_name:
-                if cooling_col_name not in df.columns.values:
-                    # initialize the columns
-                    df[cooling_col_name] = 0
-                df[cooling_col_name] += df[modeled_name]
-
-            # if 'Cooling' in modeled_name:
-            #     df['Total Cooling Energy %s' % model_data['moniker']] += df[modeled_name]
-
-        # sum up the heating and cooling columns for the total energy for each model_type
-        heating_col_name = 'Total Heating Energy %s' % model_data['moniker']
-        cooling_col_name = 'Total Cooling Energy %s' % model_data['moniker']
-        total_col_name = 'Total HVAC Energy %s' % model_data['moniker']
-
-        if total_col_name not in df.columns.values:
-            df[total_col_name] = 0
-
-        if heating_col_name in df.columns.values:
-            df[total_col_name] += df[heating_col_name]
-
-        if cooling_col_name in df.columns.values:
-            df[total_col_name] += df[cooling_col_name]
 
     # Run the metamodel for each of the response variables
     errors = []
@@ -222,57 +179,61 @@ def validate_dataframe(df, metadata, image_save_dir):
         save_dict_to_csv(errors, "%s/statistics.csv" % image_save_dir)
 
     # Convert Energy to Watts
-    df['Total HVAC Energy'] = df['Total HVAC Energy'] / 277777.77
+    # df['Total HVAC Energy'] = df['Total HVAC Energy'] / 277777.77
 
     # One off plots
-    melted_df = pd.melt(
-        df[['SiteOutdoorAirDrybulbTemperature', 'Total HVAC Energy']],
-        id_vars='SiteOutdoorAirDrybulbTemperature',
-        var_name='Model',
-        value_name='Energy'
-    )
-    melted_df['Dummy'] = 0
-    filename = '%s/fig_validation_energy_actual.png' % image_save_dir
-    validation_plot_energy_temp(melted_df, filename)
+    # for model_type, model_data in metadata.items():
+    #     for response in model_data['responses']:
+    #         melted_df = pd.melt(
+    #             df[['SiteOutdoorAirDrybulbTemperature', response]],
+    #             id_vars='SiteOutdoorAirDrybulbTemperature',
+    #             var_name='Model',
+    #             value_name='Energy'
+    #         )
+    #         melted_df['Dummy'] = 0
+    #         filename = f'{image_save_dir}/fig_validation_energy_actual_{model_type}.png'
+    #         validation_plot_energy_temp(melted_df, filename)
 
-    all_columns = ['SiteOutdoorAirDrybulbTemperature', 'Total HVAC Energy']
-    for model_type, model_data in metadata.items():
-        # Convert to Watts
-        df['Total HVAC Energy %s' % model_data['moniker']] = df['Total HVAC Energy %s' % model_data['moniker']] / 277777.77
-        all_columns.append('Total HVAC Energy %s' % model_data['moniker'])
-        melted_df = pd.melt(
-            df[['SiteOutdoorAirDrybulbTemperature', 'Total HVAC Energy',
-                'Total HVAC Energy %s' % model_data['moniker']]],
-            id_vars='SiteOutdoorAirDrybulbTemperature',
-            var_name='Model',
-            value_name='Energy'
-        )
-        melted_df['Dummy'] = 0
-        filename = '%s/fig_validation_energy_combined_%s.png' % (
-            image_save_dir, model_data['moniker'])
-        validation_plot_energy_temp(melted_df, filename)
-
-    # Plot energy vs. outdoor temperature for all of the responses
-    melted_df = pd.melt(
-        df[all_columns],
-        id_vars='SiteOutdoorAirDrybulbTemperature',
-        var_name='Model',
-        value_name='Energy'
-    )
-    melted_df['Dummy'] = 0
-    filename = '%s/fig_validation_energy_combined_all.png' % image_save_dir
-    validation_plot_energy_temp(melted_df, filename)
+    # all_columns = ['SiteOutdoorAirDrybulbTemperature', 'Total HVAC Energy']
+    # for model_type, model_data in metadata.items():
+    #     # Convert to Watts
+    #     df['Total HVAC Energy %s' % model_data['moniker']] = df['Total HVAC Energy %s' % model_data['moniker']] / 277777.77
+    #     all_columns.append('Total HVAC Energy %s' % model_data['moniker'])
+    #     melted_df = pd.melt(
+    #         df[['SiteOutdoorAirDrybulbTemperature', 'Total HVAC Energy',
+    #             'Total HVAC Energy %s' % model_data['moniker']]],
+    #         id_vars='SiteOutdoorAirDrybulbTemperature',
+    #         var_name='Model',
+    #         value_name='Energy'
+    #     )
+    #     melted_df['Dummy'] = 0
+    #     filename = '%s/fig_validation_energy_combined_%s.png' % (
+    #         image_save_dir, model_data['moniker'])
+    #     validation_plot_energy_temp(melted_df, filename)
+    #
+    # # Plot energy vs. outdoor temperature for all of the responses
+    # melted_df = pd.melt(
+    #     df[all_columns],
+    #     id_vars='SiteOutdoorAirDrybulbTemperature',
+    #     var_name='Model',
+    #     value_name='Energy'
+    # )
+    # melted_df['Dummy'] = 0
+    # filename = '%s/fig_validation_energy_combined_all.png' % image_save_dir
+    # validation_plot_energy_temp(melted_df, filename)
 
     # Create a subselection of the data, and run some other plots
+    initial_date = df.iloc[0]['DateTime']
     sub_data = {
-        'Swing': df[df["DateTime"].between("2009-03-01 01:00", "2009-03-10 00:00")],
-        'Summer': df[df["DateTime"].between("2009-07-01 01:00", "2009-07-10 00:00")],
-        'Winter': df[df["DateTime"].between("2009-01-15 01:00", "2009-01-25 00:00")],
+        'Swing': df[df["DateTime"].between(f"{initial_date.year}-03-01 01:00", f"{initial_date.year}-03-10 00:00")],
+        'Summer': df[df["DateTime"].between(f"{initial_date.year}-07-01 01:00", f"{initial_date.year}-07-10 00:00")],
+        'Winter': df[df["DateTime"].between(f"{initial_date.year}-01-15 01:00", f"{initial_date.year}-01-25 00:00")],
     }
 
     for season, season_df in sub_data.items():
         # Gather a list of all the responses and the modeled column names
         all_responses = {}
+        print(metadata)
         for model_type, model_data in metadata.items():
             for response in model_data['responses']:
                 modeled_name = "Modeled %s %s" % (model_data['moniker'], response)
