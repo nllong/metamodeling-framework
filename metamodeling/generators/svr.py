@@ -123,7 +123,7 @@ class SVR(ModelGeneratorBase):
                 model = SKL_SVR()
 
                 kfold = 3
-                print('Perfoming CV with k-fold equal to %s' % kfold)
+                print('Performing CV with k-fold equal to %s' % kfold)
                 # grab the param grid from what was specified in the metamodels.json file
                 param_grid = analysis_options.get('param_grid', {})
                 total_candidates = 1
@@ -135,7 +135,7 @@ class SVR(ModelGeneratorBase):
                 # allow for the computer to be responsive during grid_search
                 n_jobs = multiprocessing.cpu_count() - 1
                 grid_search = GridSearchCV(estimator=model, param_grid=param_grid, cv=kfold,
-                                           verbose=2, refit=True, n_jobs=n_jobs)
+                                           verbose=2, refit=True, n_jobs=n_jobs, return_train_score=True)
                 start = time.time()
                 grid_search.fit(train_x, train_y[response])
                 cv_time = time.time() - start

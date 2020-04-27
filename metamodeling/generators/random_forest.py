@@ -62,8 +62,11 @@ class RandomForest(ModelGeneratorBase):
 
         # grab the one hot encoder
         ohe = (pipeline.named_steps['preprocess'].named_transformers_['cat'].named_steps['onehot'])
-        feature_names = ohe.get_feature_names(input_features=self.categorical_columns)
-        feature_names = np.r_[feature_names, self.numerical_columns]
+        if len(self.categorical_columns) > 0:
+            feature_names = ohe.get_feature_names(input_features=self.categorical_columns)
+            feature_names = np.r_[feature_names, self.numerical_columns]
+        else:
+            feature_names = np.r_[self.numerical_columns]
 
         tree_feature_importances = (pipeline.named_steps['regressor'].feature_importances_)
         sorted_idx = tree_feature_importances.argsort()
@@ -259,7 +262,7 @@ class RandomForest(ModelGeneratorBase):
                     )
                 )
             else:
-                pickle_file(base_model, '%s/%s' % (self.models_dir, response))
+                pickle_file(pipeline, '%s/%s' % (self.models_dir, response))
 
         if self.model_results:
             save_dict_to_csv(self.model_results, '%s/model_results.csv' % self.base_dir)

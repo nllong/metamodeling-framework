@@ -41,8 +41,8 @@ class TestRunningSmallOfficeTest(TestCase):
         os.system(cmd)
 
         files_to_check = [
-            'images/fig_yy_DistrictHeatingHotWaterEnergy.png',
-            'images/fig_yy_hexplot_ETSHeatingOutletTemperature.png',
+            'images/fig_yy_HeatingElectricity.png',
+            'images/fig_yy_hexplot_HeatingElectricity.png',
             'models/HeatingElectricity.pkl',
             'models/models.zip',
         ]
@@ -83,7 +83,7 @@ class TestRunningSmallOfficeTest(TestCase):
         # Pick some random files to spot check their existence
         files_to_check = [
             'fig_validation_HeatingElectricity_RF.png',
-            'fig_validation_ts_Winter_DistrictHeatingHotWaterEnergy_RF.png',
+            'fig_validation_ts_Winter_HeatingElectricity_RF.png',
             'metrics.csv',
         ]
 
