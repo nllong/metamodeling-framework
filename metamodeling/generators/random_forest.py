@@ -14,6 +14,11 @@ import seaborn as sns
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import GridSearchCV
 from sklearn.tree import export_graphviz
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.impute import SimpleImputer
+
 
 from .model_generator_base import ModelGeneratorBase
 from ..shared import pickle_file, save_dict_to_csv, zipdir
@@ -23,6 +28,9 @@ class RandomForest(ModelGeneratorBase):
     def __init__(self, analysis_id, random_seed=None, **kwargs):
         super().__init__(analysis_id, random_seed, **kwargs)
 
+        self.categorical_columns = None
+        self.numerical_columns = None
+
     def export_tree_png(self, tree, covariates, filename):
         export_graphviz(tree, feature_names=np.asarray(covariates), filled=True, rounded=True)
         copy_tree_path = os.path.join(os.path.dirname(filename), 'tree.dot')
@@ -31,7 +39,7 @@ class RandomForest(ModelGeneratorBase):
         if os.path.exists(copy_tree_path):
             os.remove(copy_tree_path)
 
-    def evaluate(self, model, model_name, model_type, x_data, y_data, downsample,
+    def evaluate(self, pipeline, model_name, model_type, x_data, y_data, downsample,
                  build_time, cv_time, covariates=None, scaler=None):
         """
         Evaluate the performance of the forest based on known x_data and y_data.
@@ -48,37 +56,43 @@ class RandomForest(ModelGeneratorBase):
         :return:
         """
         _yhat, performance = super().evaluate(
-            model, model_name, model_type, x_data, y_data, downsample,
+            pipeline, model_name, model_type, x_data, y_data, downsample,
             build_time, cv_time, covariates, scaler
         )
 
-        importance_data = pd.Series(model.feature_importances_, index=np.asarray(covariates))
-        importance_data = importance_data.nlargest(20)
+        # grab the one hot encoder
+        ohe = (pipeline.named_steps['preprocess'].named_transformers_['cat'].named_steps['onehot'])
+        if len(self.categorical_columns) > 0:
+            feature_names = ohe.get_feature_names(input_features=self.categorical_columns)
+            feature_names = np.r_[feature_names, self.numerical_columns]
+        else:
+            feature_names = np.r_[self.numerical_columns]
 
-        fig = plt.figure(figsize=(8, 4), dpi=100)
-        # defaults to the ax in the figure.
-        ax = sns.barplot(x=list(importance_data), y=list(importance_data.index.values),
-                         color="grey", ci=None)
-        # ax.set(xlabel='Relative Importance', ylabel='')
+        tree_feature_importances = (pipeline.named_steps['regressor'].feature_importances_)
+        sorted_idx = tree_feature_importances.argsort()
+
+        y_ticks = np.arange(0, len(feature_names))
+        fig, ax = plt.subplots()
+        ax.barh(y_ticks, tree_feature_importances[sorted_idx])
+        ax.set_yticklabels(feature_names[sorted_idx])
+        ax.set_yticks(y_ticks)
         ax.set_xlabel('Relative Importance')
-        plt.tight_layout()
+        fig.tight_layout()
         fig.savefig('%s/fig_importance_%s.png' % (self.images_dir, model_name))
-        fig.clf()
-        plt.clf()
 
         # plot a single tree
         # TODO: add a configuration option on when to export the tree. This can take a long
         # time to export with large trees.
         # if downsample <= 0.01:
         #   tree_file_name = '%s/fig_first_tree_%s.png' % (self.images_dir, model_name)
-        #   self.export_tree_png(model.estimators_[0], covariates, tree_file_name)
+        #   self.export_tree_png(pipeline['regressor'].estimators_[0], covariates, tree_file_name)
 
         # add some more data to the model evaluation dict
-        performance['n_estimators'] = model.n_estimators
-        performance['max_depth'] = model.max_depth if not model.max_depth else 0
-        performance['max_features'] = model.max_features
-        performance['min_samples_leaf'] = model.min_samples_leaf
-        performance['min_samples_split'] = model.min_samples_leaf
+        performance['n_estimators'] = pipeline['regressor'].n_estimators
+        performance['max_depth'] = pipeline['regressor'].max_depth if not pipeline['regressor'].max_depth else 0
+        performance['max_features'] = pipeline['regressor'].max_features
+        performance['min_samples_leaf'] = pipeline['regressor'].min_samples_leaf
+        performance['min_samples_split'] = pipeline['regressor'].min_samples_leaf
 
         return performance
 
@@ -140,6 +154,11 @@ class RandomForest(ModelGeneratorBase):
         super().build(metamodel, **kwargs)
 
         analysis_options = kwargs.get('algorithm_options', {})
+        # grab the CV param grid for the analysis and prepend the 'regressor' pipeline. Only do this
+        # once per build
+        param_grid = analysis_options.get('param_grid', {})
+        for k in param_grid.keys():
+            param_grid[f"regressor__{k}"] = param_grid.pop(k)
 
         train_x, test_x, train_y, test_y, validate_xy, _scaler = self.train_test_validate_split(
             self.dataset,
@@ -152,17 +171,37 @@ class RandomForest(ModelGeneratorBase):
 
         for response in metamodel.available_response_names(self.model_type):
             print("Fitting random forest model for %s" % response)
-
             start = time.time()
             base_fit_params = analysis_options.get('base_fit_params', {})
-            rf = RandomForestRegressor(**base_fit_params)
-            base_model = rf.fit(train_x, train_y[response])
+
+            # setup a pipeline to categorize variables correctly
+            # https://scikit-learn.org/stable/auto_examples/inspection/plot_permutation_importance.html#sphx-glr-auto-examples-inspection-plot-permutation-importance-py
+            covariate_types = metamodel.covariate_types(self.model_type)
+            # TODO: move this up to the constructor
+            self.categorical_columns = covariate_types['str']
+            self.numerical_columns = covariate_types['int'] + covariate_types['float']
+
+            categorical_pipe = Pipeline([
+                ('onehot', OneHotEncoder(handle_unknown='ignore'))
+            ])
+            numerical_pipe = Pipeline([
+                ('imputer', SimpleImputer(strategy='mean'))
+            ])
+            preprocessing = ColumnTransformer(
+                [('cat', categorical_pipe, self.categorical_columns),
+                 ('num', numerical_pipe, self.numerical_columns)])
+            rf = Pipeline([
+                ('preprocess', preprocessing),
+                ('regressor', RandomForestRegressor(**base_fit_params))
+            ])
+            # run the base model, before CV
+            pipeline = rf.fit(train_x, train_y[response])
             build_time = time.time() - start
 
             # Evaluate the forest when building them
             self.model_results.append(
                 self.evaluate(
-                    base_model, response, 'base', test_x, test_y[response],
+                    pipeline, response, 'base', test_x, test_y[response],
                     self.downsample, build_time, 0,
                     covariates=metamodel.covariate_names(self.model_type),
                     scaler=_scaler
@@ -170,16 +209,14 @@ class RandomForest(ModelGeneratorBase):
             )
 
             if not kwargs.get('skip_cv', False):
-                rf = RandomForestRegressor()
-
+                # TODO: make this an argument
                 kfold = 3
                 print('Perfoming CV with k-fold equal to %s' % kfold)
-                # Grab the param grid from what was specified in the metamodels.json file
-                param_grid = analysis_options.get('param_grid', {})
+
+                # calculate the total number of candidate solutions
                 total_candidates = 1
                 for param, options in param_grid.items():
                     total_candidates = len(options) * total_candidates
-
                 print('CV will result in %s candidates' % total_candidates)
 
                 # Need to update to handle strings:
@@ -187,8 +224,9 @@ class RandomForest(ModelGeneratorBase):
 
                 # Allow for the computer to be responsive during grid_search
                 n_jobs = multiprocessing.cpu_count() - 1
-                grid_search = GridSearchCV(estimator=rf, param_grid=param_grid, cv=kfold,
-                                           verbose=2, refit=True, n_jobs=n_jobs)
+                grid_search = GridSearchCV(rf, param_grid=param_grid, cv=kfold,
+                                           verbose=2, refit=True, n_jobs=n_jobs,
+                                           return_train_score=True)
 
                 start = time.time()
                 grid_search.fit(train_x, train_y[response])
@@ -201,10 +239,13 @@ class RandomForest(ModelGeneratorBase):
                 print('The best params were %s' % grid_search.best_params_)
 
                 # Rebuild only the best rf, and save the results
-                model = RandomForestRegressor(**grid_search.best_params_)
-                best_model = model.fit(train_x, train_y[response])
+                rf = Pipeline([
+                    ('preprocess', preprocessing),
+                    ('regressor', RandomForestRegressor(**base_fit_params))
+                ])
+                best_pipeline = rf.fit(train_x, train_y[response])  # this is really the pipeline
 
-                pickle_file(best_model, '%s/%s' % (self.models_dir, response))
+                pickle_file(best_pipeline, '%s/%s' % (self.models_dir, response))
 
                 # Save the cv results
                 self.save_cv_results(
@@ -214,14 +255,14 @@ class RandomForest(ModelGeneratorBase):
 
                 self.model_results.append(
                     self.evaluate(
-                        best_model, response, 'best', test_x, test_y[response],
+                        best_pipeline, response, 'best', test_x, test_y[response],
                         self.downsample, build_time, cv_time,
                         covariates=metamodel.covariate_names(self.model_type),
                         scaler=_scaler
                     )
                 )
             else:
-                pickle_file(base_model, '%s/%s' % (self.models_dir, response))
+                pickle_file(pipeline, '%s/%s' % (self.models_dir, response))
 
         if self.model_results:
             save_dict_to_csv(self.model_results, '%s/model_results.csv' % self.base_dir)

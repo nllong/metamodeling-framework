@@ -19,7 +19,7 @@ class DuplicateColumnName(Exception):
     pass
 
 
-class ETSModel:
+class Metamodel:
     def __init__(self, response_name, model_file, scaler_file=None):
         """
         Load the model from a pandas pickled dataframe.
@@ -274,7 +274,7 @@ class Metamodels(object):
                 self.rom_type, response, downsample=downsample, root_path=root_path
             )
 
-            self.models[response] = ETSModel(response, model_path, scaler_path)
+            self.models[response] = Metamodel(response, model_path, scaler_path)
             metrics['response'].append(response)
             metrics['model_type'].append(model_type)
             metrics['downsample'].append(downsample)

@@ -29,12 +29,14 @@ setup(
     python_requires='>=3',
     # If updating here, then make sure to update requirements.txt file as well.
     install_requires=[
-        'scikit-learn==0.19.2',
-        'matplotlib==2.2.3',
-        'pandas==0.23.2',
-        'seaborn==0.9.0',
-        'requests==2.23.0',
+        'matplotlib==3.2.1',
+        'numpy==1.18.3',
+        'pandas==1.0.3',
         'pyfiglet==0.8.post1',
+        'requests==2.23.0',
+        'scikit-learn==0.22.2',
+        'scipy==1.4.1',
+        'seaborn==0.10.',
     ],
     classifiers=[
         'Development Status :: 4 - Beta',
@@ -49,3 +51,4 @@ setup(
     packages=find_packages(exclude=('tests', 'docs')),
     scripts=['bin/metamodel.py'],
 )
+
