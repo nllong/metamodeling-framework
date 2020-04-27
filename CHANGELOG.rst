@@ -13,6 +13,7 @@ Version 0.1.2 (Current Develop)
 * Rename ETSModel to Metamodel. Metamodels point to a Metamodel (not ETSModel)
 * Update SciKit Learn to 0.22.2, Update NumPy to 1.18.3, and other dependencies.
 * Use pipelines for Random Forest and enable categorical variables
+* Fix EPW Day of week calculation. Add Day of Week (%A) and Day of Week Int (%w).
 
 Version 0.1.1
 =============

@@ -131,8 +131,13 @@ class EpwFile:
             # convert to dt
             dt_obj = datetime.strptime(dt, '%m/%d/%Y %H:%M')
 
-            # Add in the DayOfYear for conveniency.
+            # Add in the DayOfYear for convenience.
             self.data[index]['DayOfYear'] = dt_obj.strftime('%j')
+
+            # add in the day of the week
+            self.data[index]['dayofweek'] = dt_obj.strftime('%A')
+            self.data[index]['dayofweek_int'] = dt_obj.strftime('%w')  # 0 = sunday, 1 = monday, ...
+
 
     def as_dataframe(self):
         """
@@ -140,7 +145,6 @@ class EpwFile:
 
         :return: pandas DataFrame
         """
-
         return pd.DataFrame(self.data).drop(columns=['data_source'])
 
 
