@@ -126,7 +126,7 @@ class ModelGeneratorBase(object):
             self.dataset = self.dataset.rename(columns=rename_columns)
 
     def evaluate(self, model, model_name, model_moniker, x_data, y_data, downsample,
-                 build_time, cv_time, covariates=None, scaler=None, pipeline=None):
+                 build_time, cv_time, covariates=None, scaler=None):
         """
         Generic base function to evaluate the performance of the models.
 
