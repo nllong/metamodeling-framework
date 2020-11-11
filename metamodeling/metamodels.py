@@ -122,6 +122,7 @@ class Metamodels(object):
         ds = self.algorithm_options.get(model_name, {}).get('downsamples', None)
         if ds is None:
             ds = self.file[self.set_i].get('downsamples', None)
+
         return ds
 
     @property

@@ -151,6 +151,7 @@ class ModelGeneratorBase(object):
         slope, intercept, r_value, _p_value, _std_err = stats.linregress(y_data, yhat)
 
         self.yy_plots(y_data, yhat, model_name)
+        self.qq_plots(x_data, y_data, yhat, model_name)
 
         return yhat, OrderedDict([
             ('name', model_name),
@@ -241,8 +242,7 @@ class ModelGeneratorBase(object):
                             dataset[cv['name']] = dataset.apply(
                                 apply_cyclic_transform,
                                 column_name=cv['name'],
-                                category_count=cv['algorithm_options'][self.model_type][
-                                    'category_count'],
+                                category_count=cv['algorithm_options'][self.model_type]['category_count'],
                                 axis=1
                             )
 
@@ -309,15 +309,12 @@ class ModelGeneratorBase(object):
                 ci=None,
                 scatter_kws={"s": 50, "alpha": 1}
             )
-            # plt.title("Training Set: Y-Y Plot for %s" % model_name)
             plt.tight_layout()
             plt.savefig('%s/fig_yy_%s.png' % (self.images_dir, model_name))
             fig.clf()
             plt.clf()
 
         # Hex plots for YY data
-
-        # Full resolution YY Plots
         with plt.rc_context(dict(sns.axes_style("ticks"))):
             newplt = sns.jointplot(
                 data['Y'], data['Yhat'], kind="hex", space=0
@@ -334,23 +331,32 @@ class ModelGeneratorBase(object):
             newplt.savefig('%s/fig_yy_hexplot_hres_%s.png' % (self.images_dir, model_name))
             plt.clf()
 
-    def anova_plots(self, y_data, yhat, model_name):
-        residuals = y_data - yhat
-        # figsize = width, height
-        fig = plt.figure(figsize=(8, 4), dpi=100)
+    def qq_plots(self, x_data, y_data, y_hat, model_name):
+        """Create QQ plots of the data.
+        """
+        # This need to be updated with the creating a figure with a size
+        sns.set(color_codes=True)
 
-        ax1 = fig.add_subplot(1, 2, 1)
-        ax1.plot(yhat, residuals, 'o')
-        plt.axhline(y=0, color='grey', linestyle='dashed')
-        ax1.set_xlabel('Fitted values')
-        ax1.set_ylabel('Residuals')
-        ax1.set_title('Residuals vs Fitted')
+        # save off all the data for later analysis
+        single_df = x_data.copy()
+        single_df['y'] = y_data
+        single_df['y_hat'] = y_hat
+        single_df['residuals'] = single_df['y'] - single_df['y_hat']
+        # single_df.to_csv('%s/residuals_qq_%s.csv' % (self.data_dir, model_name))
 
-        # ax2 = fig.add_subplot(1, 2, 2)
-        # sm.qqplot(residuals, line='s', ax=ax2)
-        # ax2.set_title('Normal Q-Q')
+        # Residual plots
+        with plt.rc_context(dict(sns.axes_style("whitegrid"))):
+            fig = plt.figure(figsize=(6, 6), dpi=100)
+            sns.regplot(
+                x='y',
+                y='residuals',
+                data=single_df,
+                ci=None,
+                scatter_kws={"s": 50, "alpha": 1}
+            )
+            plt.tight_layout()
+            plt.savefig('%s/fig_residuals_%s.png' % (self.images_dir, model_name))
+            fig.clf()
+            plt.clf()
 
-        # plt.tight_layout()
-        # fig.savefig('%s/fig_anova_%s.png' % (self.images_dir, model_name))
-        # fig.clf()
-        # plt.clf()
+        # QQ plots (todo)

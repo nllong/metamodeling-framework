@@ -168,6 +168,21 @@ def validate_dataframe(df, metadata, image_save_dir):
                 )
             )
 
+            # On all the data, plot the residuals vs the timeseries to see if there is any temporal dependence.
+            res_df = df.copy()
+            res_df['residuals'] = res_df[response] - res_df[modeled_name]
+            # save off the data for further analysis -- the files are essentially the same, but this is easiest right
+            # now
+            res_df.to_csv('%s/residual_ts_%s_%s.csv' % (image_save_dir, response, model_data['moniker']))
+            selected_columns = ['DateTime', 'residuals']
+            melted_df = pd.melt(res_df[selected_columns],
+                                id_vars='DateTime',
+                                var_name='Variable',
+                                value_name='Value')
+            melted_df['Dummy'] = 0
+            filename = '%s/fig_residual_ts_%s_%s.png' % (image_save_dir, response, model_data['moniker'])
+            validation_plot_timeseries(melted_df, filename)
+
             # Save data to image dir, because that is the only directory that I know of right now
         save_dict_to_csv(errors, "%s/statistics.csv" % image_save_dir)
 

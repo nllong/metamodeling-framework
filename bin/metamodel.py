@@ -45,7 +45,7 @@ print(f.renderText('Metamodeling'))
 
 parser = argparse.ArgumentParser()
 parser.add_argument('action', default=None, choices=['inspect', 'build', 'evaluate', 'validate', 'run'])
-parser.add_argument('-f', '--file', help='Metadata file to use', default='metamodels.json')
+parser.add_argument('-f', '--file', help='Metadata file to use (defaults to metamodels.json)', default='metamodels.json')
 parser.add_argument('-a', '--analysis-moniker', help='Name of the Analysis Model', required=True)
 parser.add_argument('-m', '--model-type', nargs='*',
                     choices=['LinearModel', 'RandomForest', 'SVR'],
@@ -54,7 +54,7 @@ parser.add_argument('-m', '--model-type', nargs='*',
 
 # Run file options
 parser.add_argument('-ad', '--analysis-definition',
-                    help='Definition of an analysis to run using the ROMs', default=None)
+                    help='Definition of an analysis to run using the metamodels', default=None)
 parser.add_argument('-w', '--weather', help='Weather file to run analysis-definition', default=None)
 parser.add_argument('-o', '--output', help='File to save the results to', default=None)
 downsample = parser.add_argument(
@@ -152,7 +152,7 @@ if metamodel.set_analysis(args.analysis_moniker):
                     evaluate_process_all_model_results(data, validation_dir)
     elif args.action == 'validate':
         # Validate requires iterating over the downsamples before the models
-        if args.downsample and args.downsample not in metamodel.downsamples:
+        if args.downsample and args.downsample not in metamodel.downsamples(None):
             print("Downsample argument must exist in the downsample list in the JSON")
             exit(1)
 
