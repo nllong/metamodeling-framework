@@ -16,6 +16,7 @@ Version 0.1.2 (Current Develop)
 * Fix EPW Day of week calculation. Add Day of Week (%A) and Day of Week Int (%w).
 * Add seaborn-qqplot to requirements
 * Fix bug passing downsampling value to validation (users needs to ensure there is a downsample key in the metamodel.json file)
+* Remove the renaming of ETS and district energy variables. These now must be renamed in the postprocessing of the simulation results.
 
 Version 0.1.1
 =============

@@ -34,9 +34,6 @@ def validation_plot_energy_temp(melted_df, filename):
 
 
 def validation_plot_timeseries(melted_df, filename):
-    def date_formatter(x, pos):
-        return pd.to_datetime(x).strftime('%Y-%m-%d\n %H:%M')
-
     sns.set(color_codes=True)
     plt.rcParams['figure.figsize'] = [10, 4]
 

@@ -109,21 +109,6 @@ class ModelGeneratorBase(object):
             raise Exception(f"Datafile does not exist: {datafile}")
 
         print(f'Loading results data file: {datafile}')
-        # message the data as needed based on the kwargs arg
-        # TODO: remove these hard coded options and pass in as kwargs.
-        drop_columns = ['DistrictCoolingOutletTemperature']
-        rename_columns = {
-            'DistrictHeatingOutletTemperature': 'ETSInletTemperature',
-            'DistrictHeatingInletTemperature': 'ETSHeatingOutletTemperature',
-            'DistrictCoolingInletTemperature': 'ETSCoolingOutletTemperature',
-        }
-
-        for column in drop_columns:
-            if column in list(self.dataset.columns.values):
-                self.dataset = self.dataset.drop(column, 1)
-
-        if rename_columns:
-            self.dataset = self.dataset.rename(columns=rename_columns)
 
     def evaluate(self, model, model_name, model_moniker, x_data, y_data, downsample,
                  build_time, cv_time, covariates=None, scaler=None):
