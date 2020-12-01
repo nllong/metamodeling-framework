@@ -286,7 +286,7 @@ class ModelGeneratorBase(object):
         data = pd.DataFrame.from_dict({'Y': y_data, 'Yhat': yhat})
 
         with plt.rc_context(dict(sns.axes_style("whitegrid"))):
-            fig = plt.figure(figsize=(6, 6), dpi=100)
+            plt.figure(figsize=(6, 6), dpi=100)
             sns.regplot(
                 x='Y',
                 y='Yhat',
@@ -330,7 +330,7 @@ class ModelGeneratorBase(object):
 
         # Residual plots
         with plt.rc_context(dict(sns.axes_style("whitegrid"))):
-            fig = plt.figure(figsize=(6, 6), dpi=100)
+            plt.figure(figsize=(6, 6), dpi=100)
             sns.regplot(
                 x='y',
                 y='residuals',

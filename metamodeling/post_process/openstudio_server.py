@@ -1,7 +1,12 @@
+"""
+.. moduleauthor:: Nicholas Long (nicholas.l.long@colorado.edu, nicholas.lee.long@gmail.com)
+"""
 # Class for accessing and downloading data from OpenStudio Server
 
-import requests
 import re
+
+import requests
+
 
 class OpenStudioServerAPI(object):
     def __init__(self, host, port):
@@ -53,7 +58,7 @@ class OpenStudioServerAPI(object):
 
         return datapoint
 
-    def download_datapoint_report(self, datapoint_id, report_name, save_directory = '.'):
+    def download_datapoint_report(self, datapoint_id, report_name, save_directory='.'):
         """Download a datapoint report that was generated upon completion of the simulations"""
         downloaded = False
         file_path_and_name = None
@@ -68,4 +73,3 @@ class OpenStudioServerAPI(object):
                 f.write(r.text)
 
         return downloaded, file_path_and_name
-

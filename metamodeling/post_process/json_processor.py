@@ -1,8 +1,9 @@
-import requests
-import re
+"""
+.. moduleauthor:: Nicholas Long (nicholas.l.long@colorado.edu, nicholas.lee.long@gmail.com)
+"""
+import copy
 import json
 import os
-import copy
 
 
 class JsonProcessorFile(object):
@@ -97,5 +98,3 @@ class JsonProcessorFile(object):
             with open(filename, 'w') as f:
                 json.dump(self.data, f, indent=2)
             return True
-
-

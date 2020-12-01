@@ -6,9 +6,9 @@ Process an EPW file
 """
 import csv
 from collections import OrderedDict
+from datetime import datetime
 
 import pandas as pd
-from datetime import datetime
 
 
 class EpwFile:
@@ -137,7 +137,6 @@ class EpwFile:
             # add in the day of the week
             self.data[index]['dayofweek'] = dt_obj.strftime('%A')
             self.data[index]['dayofweek_int'] = dt_obj.strftime('%w')  # 0 = sunday, 1 = monday, ...
-
 
     def as_dataframe(self):
         """

@@ -10,15 +10,13 @@ import zipfile
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import seaborn as sns
+from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import RandomForestRegressor
+from sklearn.impute import SimpleImputer
 from sklearn.model_selection import GridSearchCV
-from sklearn.tree import export_graphviz
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder
-from sklearn.compose import ColumnTransformer
-from sklearn.impute import SimpleImputer
-
+from sklearn.tree import export_graphviz
 
 from .model_generator_base import ModelGeneratorBase
 from ..shared import pickle_file, save_dict_to_csv, zipdir

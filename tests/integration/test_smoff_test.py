@@ -9,6 +9,7 @@ from unittest import TestCase
 
 import pytest
 
+
 class TestRunningSmallOfficeTest(TestCase):
     @classmethod
     def setUpClass(cls):
@@ -91,4 +92,3 @@ class TestRunningSmallOfficeTest(TestCase):
             for f in files_to_check:
                 check_path = f'{d}/ValidationData/images/{f}'
                 self.assertTrue(os.path.exists(check_path), msg=f'Could not find {check_path}')
-

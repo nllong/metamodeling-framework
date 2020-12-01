@@ -6,7 +6,6 @@
 from collections import OrderedDict
 from math import sqrt
 
-import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -251,9 +250,9 @@ def validate_dataframe(df, metadata, image_save_dir):
                     #   Try using .loc[row_indexer,col_indexer] = value instead
                     # Using iloc, loc, assign, apply(lambda...), etc. Not sure how to prevent the warning.
                     icol = season_df.columns.get_loc(response)
-                    season_df.iloc[:, icol] *= 1/277777.77
+                    season_df.iloc[:, icol] *= 1 / 277777.77
                     icol = season_df.columns.get_loc(modeled_name)
-                    season_df.iloc[:, icol] *= 1/277777.77
+                    season_df.iloc[:, icol] *= 1 / 277777.77
 
                 selected_columns = ['DateTime', response, modeled_name]
                 melted_df = pd.melt(season_df[selected_columns],

@@ -52,4 +52,3 @@ setup(
     packages=find_packages(exclude=('tests', 'docs')),
     scripts=['bin/metamodel.py'],
 )
-
