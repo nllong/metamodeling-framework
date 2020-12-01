@@ -29,8 +29,6 @@ def validation_plot_energy_temp(melted_df, filename):
         ax.set_xlabel('Site Outdoor Air Drybulb Temperature (deg C)')
         ax.set_ylabel('HVAC Power (W)')
         newplt.savefig(filename)
-        newplt.clf()
-        plt.clf()
         plt.close('all')
 
 
@@ -50,8 +48,6 @@ def validation_plot_timeseries(melted_df, filename):
         # Put the labels at an angle since they tend to be too long
         fig.autofmt_xdate()
         fig.savefig(filename)
-        fig.clf()
-        plt.clf()
         plt.close('all')
 
 
@@ -73,8 +69,6 @@ def validation_save_metrics(df, output_dir):
         ax.set_xlabel('Index')
         ax.set_ylabel('Log Disk Size (log(MB))')
         newplt.savefig('%s/fig_performance_disk_size.png' % (output_dir))
-        newplt.clf()
-        plt.clf()
         plt.close('all')
 
     # Plot the load and run times
@@ -93,8 +87,6 @@ def validation_save_metrics(df, output_dir):
         ax.set_ylabel('Average Time (seconds)')
         plt.tight_layout()
         fig.savefig('%s/fig_performance_load_time.png' % output_dir)
-        fig.clf()
-        plt.clf()
         plt.close('all')
 
     table.rename(columns={'run_time_single': 'Run Time - Single',
@@ -110,8 +102,6 @@ def validation_save_metrics(df, output_dir):
         ax.set_ylabel('Average Time (seconds)')
         plt.tight_layout()
         fig.savefig('%s/fig_performance_run_time.png' % output_dir)
-        fig.clf()
-        plt.clf()
         plt.close('all')
 
 
@@ -143,15 +133,12 @@ def validate_dataframe(df, metadata, image_save_dir):
             fig.savefig(
                 '%s/fig_validation_%s_%s.png' % (image_save_dir, response, model_data['moniker']))
             fig.tight_layout()
-            fig.clf()
-            plt.clf()
             plt.close('all')
 
             # Lag plot for each response variable
             plt.figure()
             lag_plot(df[response])
             plt.savefig('%s/fig_lag_%s_%s.png' % (image_save_dir, model_data['moniker'], response))
-            plt.clf()
             plt.close('all')
 
             sum_of_error = (df[response] - df[modeled_name]).sum()

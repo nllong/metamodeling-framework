@@ -27,7 +27,6 @@ def evaluate_process_cv_results(cv_result_file, response, output_dir):
         df = df.drop(df.columns[[0]], axis=1)
         newplt = sns.pairplot(df)
         newplt.savefig('%s/fig_cv_%s_pairplot.png' % (output_dir, response))
-        plt.clf()
         plt.close('all')
 
         # Plot specific xy plots
@@ -37,7 +36,6 @@ def evaluate_process_cv_results(cv_result_file, response, output_dir):
             x=df['mean_fit_time'], y=df['mean_test_score'], kind="hex"
         ).set_axis_labels('Mean Fit Time (seconds)', 'Mean Test Score (fraction)')
         newplt.savefig('%s/fig_cv_%s_time_v_score_hex.png' % (output_dir, response))
-        plt.clf()
         plt.close('all')
 
         # Plot specific xy plots -- darkgrid background
@@ -48,7 +46,6 @@ def evaluate_process_cv_results(cv_result_file, response, output_dir):
             ax.set_xlabel('Mean Fit Time (seconds)')
             ax.set_ylabel('Mean Test Score (fraction)')
             newplt.savefig('%s/fig_cv_%s_time_v_score.png' % (output_dir, response))
-            plt.clf()
             plt.close('all')
 
 
@@ -80,8 +77,6 @@ def evaluate_process_model_results(model_results_file, output_dir):
         ax.set_ylabel('')
         plt.tight_layout()
         fig.savefig('%s/fig_time_to_build.png' % output_dir)
-        fig.clf()
-        plt.clf()
         plt.close('all')
 
 
