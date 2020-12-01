@@ -28,15 +28,17 @@ def evaluate_process_cv_results(cv_result_file, response, output_dir):
         newplt = sns.pairplot(df)
         newplt.savefig('%s/fig_cv_%s_pairplot.png' % (output_dir, response))
         plt.clf()
+        plt.close('all')
 
         # Plot specific xy plots
         f, ax = plt.subplots(figsize=(6.5, 6.5))
         sns.despine(f, left=True, bottom=True)
         newplt = sns.jointplot(
-            df['mean_fit_time'], df['mean_test_score'], kind="hex"
+            x=df['mean_fit_time'], y=df['mean_test_score'], kind="hex"
         ).set_axis_labels('Mean Fit Time (seconds)', 'Mean Test Score (fraction)')
         newplt.savefig('%s/fig_cv_%s_time_v_score_hex.png' % (output_dir, response))
         plt.clf()
+        plt.close('all')
 
         # Plot specific xy plots -- darkgrid background
         with plt.rc_context(dict(sns.axes_style("whitegrid"))):
@@ -47,6 +49,7 @@ def evaluate_process_cv_results(cv_result_file, response, output_dir):
             ax.set_ylabel('Mean Test Score (fraction)')
             newplt.savefig('%s/fig_cv_%s_time_v_score.png' % (output_dir, response))
             plt.clf()
+            plt.close('all')
 
 
 def evaluate_process_model_results(model_results_file, output_dir):
@@ -79,6 +82,7 @@ def evaluate_process_model_results(model_results_file, output_dir):
         fig.savefig('%s/fig_time_to_build.png' % output_dir)
         fig.clf()
         plt.clf()
+        plt.close('all')
 
 
 def evaluate_process_all_model_results(data, validation_dir):

@@ -17,6 +17,7 @@ Version 0.1.2 (Current Develop)
 * Add seaborn-qqplot to requirements
 * Fix bug passing downsampling value to validation (users needs to ensure there is a downsample key in the metamodel.json file)
 * Remove the renaming of ETS and district energy variables. These now must be renamed in the postprocessing of the simulation results.
+* Updated to Seaborn 0.11, made sns calls use x, y
 
 Version 0.1.1
 =============

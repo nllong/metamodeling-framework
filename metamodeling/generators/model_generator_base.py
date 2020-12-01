@@ -298,23 +298,26 @@ class ModelGeneratorBase(object):
             plt.savefig('%s/fig_yy_%s.png' % (self.images_dir, model_name))
             fig.clf()
             plt.clf()
+            plt.close('all')
 
         # Hex plots for YY data
         with plt.rc_context(dict(sns.axes_style("ticks"))):
             newplt = sns.jointplot(
-                data['Y'], data['Yhat'], kind="hex", space=0
+                x=data['Y'], y=data['Yhat'], kind="hex", space=0
             )
             newplt.savefig('%s/fig_yy_hexplot_%s.png' % (self.images_dir, model_name))
             plt.clf()
+            plt.close('all')
 
             # Remove 0,0 points for higher resolution
             sub_data = data[(data.Y != 0) & (data.Yhat != 0)]
             # Hex plots for YY data
             newplt = sns.jointplot(
-                sub_data['Y'], sub_data['Yhat'], kind="hex", space=0
+                x=sub_data['Y'], y=sub_data['Yhat'], kind="hex", space=0
             )
             newplt.savefig('%s/fig_yy_hexplot_hres_%s.png' % (self.images_dir, model_name))
             plt.clf()
+            plt.close('all')
 
     def qq_plots(self, x_data, y_data, y_hat, model_name):
         """Create QQ plots of the data.
@@ -343,5 +346,6 @@ class ModelGeneratorBase(object):
             plt.savefig('%s/fig_residuals_%s.png' % (self.images_dir, model_name))
             fig.clf()
             plt.clf()
+            plt.close('all')
 
         # QQ plots (todo)

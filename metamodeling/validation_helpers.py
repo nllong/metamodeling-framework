@@ -31,6 +31,7 @@ def validation_plot_energy_temp(melted_df, filename):
         newplt.savefig(filename)
         newplt.clf()
         plt.clf()
+        plt.close('all')
 
 
 def validation_plot_timeseries(melted_df, filename):
@@ -51,6 +52,7 @@ def validation_plot_timeseries(melted_df, filename):
         fig.savefig(filename)
         fig.clf()
         plt.clf()
+        plt.close('all')
 
 
 def validation_save_metrics(df, output_dir):
@@ -73,6 +75,7 @@ def validation_save_metrics(df, output_dir):
         newplt.savefig('%s/fig_performance_disk_size.png' % (output_dir))
         newplt.clf()
         plt.clf()
+        plt.close('all')
 
     # Plot the load and run times
     table = pd.DataFrame.pivot_table(df,
@@ -92,6 +95,7 @@ def validation_save_metrics(df, output_dir):
         fig.savefig('%s/fig_performance_load_time.png' % output_dir)
         fig.clf()
         plt.clf()
+        plt.close('all')
 
     table.rename(columns={'run_time_single': 'Run Time - Single',
                           'run_time_8760': 'Run Time - 8760'}, inplace=True)
@@ -108,6 +112,7 @@ def validation_save_metrics(df, output_dir):
         fig.savefig('%s/fig_performance_run_time.png' % output_dir)
         fig.clf()
         plt.clf()
+        plt.close('all')
 
 
 def validate_dataframe(df, metadata, image_save_dir):
@@ -140,12 +145,14 @@ def validate_dataframe(df, metadata, image_save_dir):
             fig.tight_layout()
             fig.clf()
             plt.clf()
+            plt.close('all')
 
             # Lag plot for each response variable
             plt.figure()
             lag_plot(df[response])
             plt.savefig('%s/fig_lag_%s_%s.png' % (image_save_dir, model_data['moniker'], response))
             plt.clf()
+            plt.close('all')
 
             sum_of_error = (df[response] - df[modeled_name]).sum()
             sum_square_error = ((df[response] - df[modeled_name]) ** 2).sum()

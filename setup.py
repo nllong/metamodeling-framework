@@ -36,7 +36,7 @@ setup(
         'requests==2.23.0',
         'scikit-learn==0.22.2',
         'scipy==1.4.1',
-        'seaborn==0.10.',
+        'seaborn==0.11.',
         'seaborn-qqplot==0.5.0',
     ],
     classifiers=[
