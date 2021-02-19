@@ -66,6 +66,13 @@ The two repositories below were used to generate the OpenStudio/EnergyPlus model
 * `OpenStudio's Parametric Analysis Tool Projects <https://github.com/nllong/ambient-loop-pat-projects>`_
 * `OpenStudio Measures <https://github.com/nllong/ambient-loop-measures>`_
 
+Citation
+========
+
+Please reference this project using the following:
+
+Long, N., Almajed, F., von Rhein, J., & Henze, G. (2021). Development of a metamodelling framework for building energy models with application to fifth-generation district heating and cooling networks. Journal of Building Performance Simulation, 14(2), 203–225. https://doi.org/10.1080/19401493.2021.1884291
+
 To Dos
 ======
 
