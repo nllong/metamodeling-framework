@@ -24,7 +24,7 @@ post_process/.ruby-version
 /output
 
 # package information
-ROM_Framework.egg-info/
+Metamodeling_Framework.egg-info/
 /build
 /dist
 docs/build
