@@ -49,7 +49,7 @@ jobs:
       #   with:
       #     run: tox -e ${{ matrix.test_env }}
       - 
-        name: Setup xvfb (Linux)
+        name: Setup and run xvfb (Linux)
         if: runner.os == 'Linux'
         run: |
           sudo apt-get install -y xvfb
