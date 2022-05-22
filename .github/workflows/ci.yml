@@ -17,6 +17,8 @@ jobs:
         python-version: [3.7]
         test_env: [python, flake8, docs]
     runs-on: ${{ matrix.os }}
+    env:
+      DISPLAY: :99.0
     steps:
       - uses: actions/checkout@v2
       -
@@ -46,6 +48,12 @@ jobs:
       #   uses: GabrielBB/xvfb-action@v1
       #   with:
       #     run: tox -e ${{ matrix.test_env }}
+      - 
+        name: Setup xvfb (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get install -y xvfb
+          sudo /usr/bin/Xvfb $DISPLAY -screen 0 1280x1024x24 &
       - 
         name: Run tox tests ${{ matrix.test_env }}
         run: |
