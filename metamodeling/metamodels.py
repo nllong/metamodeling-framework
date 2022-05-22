@@ -238,7 +238,7 @@ class Metamodels(object):
         if not models_to_load:
             models_to_load = self.available_response_names(self.rom_type)
 
-        print("Checking if models exist %s" % models_to_load)
+        print("Checking if models exist on disk %s" % models_to_load)
         exist = []
         for response in models_to_load:
             model_path, _ = self.model_paths(

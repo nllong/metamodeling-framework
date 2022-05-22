@@ -2,7 +2,7 @@ Version 0.1.2 (Current Develop)
 ===============================
 
 * Rename project to metamodeling framework
-* Allow results_file to magically try and find the results in the post_process/{metamodel['name']}/simulation_results.csv}
+* Allow results_file to try and find the results in the post_process/{metamodel['name']}/simulation_results.csv}
 * Move downloading of simulations to Python. In custom script call from metamodeling.post_process import OpenStudioServerAPI
 * Remove Ruby and add post processing python code. User will need to write their own post processing scripts.
 * Remove the ANOVA plots in LinearModel due to missing statsmodel package.
@@ -18,6 +18,7 @@ Version 0.1.2 (Current Develop)
 * Fix bug passing downsampling value to validation (users needs to ensure there is a downsample key in the metamodel.json file)
 * Remove the renaming of ETS and district energy variables. These now must be renamed in the postprocessing of the simulation results.
 * Updated to Seaborn 0.11, made sns calls use x, y
+* Move to GitHub Actions for CI
 
 Version 0.1.1
 =============

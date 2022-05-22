@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+  
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        # 3.9 does not work as of 5/22/2022
+        python-version: [3.7]
+        test_env: [python, flake8, docs]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      -
+        name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      -
+        # does not use poetry yet, but will eventually 
+        name: Install and configure Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 1.1.13
+      - 
+        name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install tox==2.7.0
+      # -
+      #   name: Run Poetry install
+      #   run: |
+      #     poetry --version
+      #     poetry install
+      - 
+        name: Run headless tox tests ${{ matrix.test_env }}
+        uses: GabrielBB/xvfb-action@v1
+        with:
+          run: tox -e ${{ matrix.test_env }}
