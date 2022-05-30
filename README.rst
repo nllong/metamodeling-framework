@@ -81,8 +81,12 @@ To Dos
 * Remove downloaded simulation data from repository
 * Write test for running the analysis_definition (currently untested!)
 
-.. |build| image:: https://travis-ci.org/nllong/metamodeling-framework.svg?branch=develop
-    :target: https://travis-ci.org/nllong/metamodeling-framework
+![example branch parameter](feature-1)
+
+
+
+.. |build| image:: https://github.com/github/docs/actions/workflows/ci.yml/badge.svg?branch=develop
+    :target: https://github.com/github/docs/actions/workflows
 
 .. |docs| image:: https://readthedocs.org/projects/metamodelings-framework/badge/?version=latest
     :target: https://metamodeling-framework.readthedocs.io/en/latest/
