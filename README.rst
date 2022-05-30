@@ -85,7 +85,7 @@ To Dos
 
 
 
-.. |build| image:: https://github.com/github/docs/actions/workflows/ci.yml/badge.svg?branch=develop
+.. |build| image:: https://github.com/nllong/metamodeling-framework/actions/workflows/ci.yml/badge.svg?branch=develop
     :target: https://github.com/nllong/metamodeling-framework/actions
 
 .. |docs| image:: https://readthedocs.org/projects/metamodelings-framework/badge/?version=latest
