@@ -12,7 +12,7 @@ seaborn-qqplot==0.5.0
 pyfiglet==0.8.post1
 
 # AWS access
-awscli==1.15.80
+awscli==1.44.38
 
 # testing
 nose==1.3.7
